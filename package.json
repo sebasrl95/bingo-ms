@@ -1,0 +1,14 @@
+{
+  "name": "bingo-ms",
+  "version": "1.0.0",
+  "description": "Proyecto final de Programación Distribuida y Paralela - Hilos y Sockets",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
