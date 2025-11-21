@@ -19,8 +19,15 @@ socket.on("bingo", (winner) => {
   document.getElementById("soundWin").play();
 
   if (socket.id === winner.id) alert("🎉 ¡Ganaste BINGO! 🎉");
-  else alert("🏆 Otro jugador ha ganado el BINGO!");
+  else alert(`🏆 ${winner.name || "Un jugador"} ha ganado el BINGO!`);
 });
+
+function setName() {
+  const name = document.getElementById("playerName").value.trim();
+  if (name.length < 2) return alert("Debe ingresar un nombre válido");
+  socket.emit("setName", name);
+  alert("Nombre Guardado ✔️");
+}
 
 function renderCard(data) {
   const table = document.getElementById("card");
@@ -55,3 +62,17 @@ function renderCard(data) {
     tbody.appendChild(tr);
   }
 }
+
+socket.on("restart", () => {
+  alert("🔄 Nuevo juego comenzando… ¡Suerte!");
+  document.getElementById("ball").textContent = "";
+
+  // Reiniciar sonidos
+  const s1 = document.getElementById("soundBall");
+  const s2 = document.getElementById("soundWin");
+
+  [s1, s2].forEach((snd) => {
+    snd.pause(); // Detener
+    snd.currentTime = 0; // Regresar al inicio
+  });
+});

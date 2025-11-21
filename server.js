@@ -21,6 +21,12 @@ io.on("connection", (socket) => {
 
   socket.emit("card", card);
 
+  socket.on("setName", (name) => {
+    const player = clients.find((c) => c.id === socket.id);
+    if (player) player.name = name;
+    console.log(`Jugador ${socket.id} estableció su nombre a ${name}`);
+  });
+
   socket.on("mark", (data) => {
     const player = clients.find((c) => c.id === socket.id);
     if (!player) return;
@@ -30,8 +36,23 @@ io.on("connection", (socket) => {
 
     const win = checkWin(player.card, player.marked);
     if (win) {
-      io.emit("bingo", { id: socket.id });
-      usedBalls = [];
+      io.emit("bingo", { id: socket.id, name: player?.name || "Jugador" });
+
+      setTimeout(() => {
+        // Reiniciar balotas
+        usedBalls = [];
+
+        // Nueva carta para cada jugador
+        clients.forEach((p) => {
+          p.card = generateCard();
+          p.marked = Array.from({ length: 5 }, () => Array(5).fill(false));
+
+          const socketPlayer = io.sockets.sockets.get(p.id);
+          if (socketPlayer) socketPlayer.emit("card", p.card);
+        });
+
+        io.emit("restart");
+      }, 5000); // Esperar 5 seg antes de reiniciar
     }
   });
 });
