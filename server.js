@@ -51,7 +51,7 @@ setInterval(() => {
     num <= 15 ? "B" : num <= 30 ? "I" : num <= 45 ? "N" : num <= 60 ? "G" : "O";
 
   io.emit("ball", `${letter}${num}`);
-}, 3000);
+}, 6000);
 
 http.listen(PORT, () =>
   console.log(`Servidor Bingo en http://localhost:${PORT}`)
