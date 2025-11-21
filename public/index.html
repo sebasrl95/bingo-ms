@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bingo MS - Programación Distribuida y Paralela</title>
-    <style>
-      table {
-        border-collapse: collapse;
-        margin: 20px auto;
-      }
-      td {
-        width: 40px;
-        height: 40px;
-        text-align: center;
-        border: 1px solid black;
-        cursor: pointer;
-      }
-      td.mark {
-        background: yellow;
-      }
-    </style>
+    <title>Bingo - Programación Distribuida y Paralela</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1 style="text-align: center">🎉 Bingo Online 🎉</h1>
-    <h2 id="ball" style="text-align: center"></h2>
-    <table id="card"></table>
+  <body class="bg-gray-900 text-white">
+    <h1 class="text-4xl text-center font-bold mt-6">🎉 Bingo - Programación Distribuida y Paralela 🎉</h1>
+
+    <div class="flex flex-col items-center mt-6">
+      <div
+        id="ball"
+        class="text-3xl font-extrabold text-yellow-400 mb-4 transition-all duration-300 scale-100"
+      ></div>
+      <table id="card" class="shadow-lg rounded-lg overflow-hidden"></table>
+    </div>
+
+    <audio
+      id="soundBall"
+      src="https://actions.google.com/sounds/v1/cartoon/pop.ogg"
+    ></audio>
+    <audio
+      id="soundWin"
+      src="https://actions.google.com/sounds/v1/crowds/battle_crowd_celebrate_stutter.ogg"
+    ></audio>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="client.js"></script>
