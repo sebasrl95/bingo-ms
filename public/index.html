@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bingo MS - Programación Distribuida y Paralela</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        margin: 20px auto;
+      }
+      td {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        border: 1px solid black;
+        cursor: pointer;
+      }
+      td.mark {
+        background: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">🎉 Bingo Online 🎉</h1>
+    <h2 id="ball" style="text-align: center"></h2>
+    <table id="card"></table>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>
