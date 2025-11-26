@@ -25,6 +25,7 @@ io.on("connection", (socket) => {
     const player = clients.find((c) => c.id === socket.id);
     if (player) player.name = name;
     console.log(`Jugador ${socket.id} estableció su nombre a ${name}`);
+    io.emit("players", clients);
   });
 
   socket.on("mark", (data) => {
@@ -39,8 +40,10 @@ io.on("connection", (socket) => {
       io.emit("bingo", { id: socket.id, name: player?.name || "Jugador" });
 
       setTimeout(() => {
-        // Reiniciar balotas
+        // Reiniciar balotas y sorteo
         usedBalls = [];
+        clearInterval(ballInterval); // Detener actual
+        startBallInterval(); // Crear uno nuevo
 
         // Nueva carta para cada jugador
         clients.forEach((p) => {
@@ -52,27 +55,46 @@ io.on("connection", (socket) => {
         });
 
         io.emit("restart");
-      }, 5000); // Esperar 5 seg antes de reiniciar
+      }, 3000);
     }
+  });
+
+  socket.on("disconnect", () => {
+    clients = clients.filter((c) => c.id !== socket.id);
+    io.emit("players", clients);
   });
 });
 
 // Balotas aleatorias cada 10 segundos
-setInterval(() => {
-  if (usedBalls.length >= 75) return;
+let ballInterval = null;
 
-  let num;
-  do {
-    num = Math.floor(Math.random() * 75) + 1;
-  } while (usedBalls.includes(num));
+function startBallInterval() {
+  ballInterval = setInterval(() => {
+    if (usedBalls.length >= 75) return;
 
-  usedBalls.push(num);
+    let num;
+    do {
+      num = Math.floor(Math.random() * 75) + 1;
+    } while (usedBalls.includes(num));
 
-  const letter =
-    num <= 15 ? "B" : num <= 30 ? "I" : num <= 45 ? "N" : num <= 60 ? "G" : "O";
+    usedBalls.push(num);
 
-  io.emit("ball", `${letter}${num}`);
-}, 10000);
+    const letter =
+      num <= 15
+        ? "B"
+        : num <= 30
+        ? "I"
+        : num <= 45
+        ? "N"
+        : num <= 60
+        ? "G"
+        : "O";
+
+    io.emit("ball", `${letter}${num}`);
+  }, 10000);
+}
+
+startBallInterval();
 
 http.listen(PORT, () =>
   console.log(`Servidor Bingo en http://localhost:${PORT}`)

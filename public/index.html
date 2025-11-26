@@ -4,33 +4,54 @@
     <title>Bingo - Programación Distribuida y Paralela</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gray-900 text-white">
-    <h1 class="text-4xl text-center font-bold mt-6">
-      🎉 Bingo - Programación Distribuida y Paralela 🎉
-    </h1>
+  <body class="bg-gray-900 text-white flex h-screen">
+    <!-- Panel Izquierdo: Jugadores -->
+    <aside class="w-60 bg-gray-800 p-4 flex flex-col">
+      <h2 class="text-xl font-bold mb-3 text-green-400 text-center">
+        Jugadores
+      </h2>
+      <ul id="playersList" class="space-y-1 overflow-y-auto text-sm"></ul>
+    </aside>
 
-    <div class="flex flex-col items-center mt-6">
-      <div
-        id="ball"
-        class="text-3xl font-extrabold text-yellow-400 mb-4 transition-all duration-300 scale-100"
-      ></div>
-      <div class="flex flex-col items-center mt-4 mb-4">
-        <input
-          id="playerName"
-          placeholder="Tu nombre"
-          class="px-4 py-2 rounded bg-gray-700 text-white border border-gray-500 text-center"
-        />
-        <button
-          onclick="setName()"
-          class="mt-2 px-4 py-2 bg-purple-600 hover:bg-purple-800 rounded text-white font-bold"
-        >
-          Guardar Nombre
-        </button>
+    <!-- Contenido central -->
+    <main class="flex-1 flex flex-col items-center">
+      <h1 class="text-4xl text-center font-bold mt-6">
+        Bingo - Programación Distribuida y Paralela
+      </h1>
+
+      <div class="flex flex-col items-center mt-6">
+        <div
+          id="ball"
+          class="text-3xl font-extrabold text-yellow-400 mb-4 transition-all duration-300 scale-100"
+        ></div>
+
+        <div class="flex flex-col items-center mt-4 mb-4">
+          <input
+            id="playerName"
+            placeholder="Tu nombre"
+            class="px-4 py-2 rounded bg-gray-700 text-white border border-gray-500 text-center"
+          />
+          <button
+            onclick="setName()"
+            class="mt-2 px-4 py-2 bg-green-600 hover:bg-green-800 rounded text-white font-bold"
+          >
+            Guardar Nombre
+          </button>
+        </div>
+
+        <table id="card" class="shadow-lg rounded-lg overflow-hidden"></table>
       </div>
+    </main>
 
-      <table id="card" class="shadow-lg rounded-lg overflow-hidden"></table>
-    </div>
+    <!-- Panel Derecho: Últimas 10 balotas -->
+    <aside class="w-60 bg-gray-800 p-4 flex flex-col">
+      <h2 class="text-xl font-bold mb-3 text-blue-400 text-center">
+        Últimas balotas
+      </h2>
+      <ul id="lastBalls" class="space-y-1 overflow-y-auto text-sm"></ul>
+    </aside>
 
+    <!-- Audios -->
     <audio
       id="soundBall"
       src="https://actions.google.com/sounds/v1/cartoon/pop.ogg"
