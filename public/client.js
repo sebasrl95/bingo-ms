@@ -96,8 +96,8 @@ socket.on("restart", () => {
 
   // Limpiar balota actual y lista de últimas balotas
   document.getElementById("ball").textContent = "";
-  lastBalls.length = 0; // Vaciar arreglo
-  document.getElementById("lastBalls").innerHTML = ""; // Vaciar UI
+  lastBalls.length = 0;
+  document.getElementById("lastBalls").innerHTML = "";
 
   // Reiniciar sonidos
   const s1 = document.getElementById("soundBall");

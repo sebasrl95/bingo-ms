@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
         });
 
         io.emit("restart");
-      }, 3000);
+      }, 5000);
     }
   });
 
